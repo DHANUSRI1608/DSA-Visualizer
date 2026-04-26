@@ -77,12 +77,6 @@ docker run -p 3000:80 dhanusri1608/dsa-visualizer:latest
     <p><b>Dhanusri R 🤍</b></p>
   </div>
 
-  <div class="section">
-    📜 LICENSE
-    <p>Licensed under the <b>MIT License</b>.  
-    Feel free to use it, learn from it, and improve it 🚀</p>
-  </div>
-
   <div class="footer">
     © 2025 DSA Visualizer — Built with ❤️ using React, Tailwind, and Docker.
   </div>
