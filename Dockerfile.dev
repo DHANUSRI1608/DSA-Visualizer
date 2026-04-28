@@ -2,12 +2,21 @@ FROM node:18-alpine
 
 WORKDIR /app
 
+# Copy package files
 COPY package*.json ./
 
+# Install dependencies
 RUN npm install
 
+# Copy all project files
 COPY . .
 
+# Expose port for development server
 EXPOSE 5173
 
+# Health check for dev server
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+  CMD wget --quiet --tries=1 --spider http://localhost:5173/ || exit 1
+
+# Run development server
 CMD ["npm", "run", "dev"]

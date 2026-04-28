@@ -1,8 +1,37 @@
 services:
-  frontend:
+  # Development service
+  dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "5173:5173"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    container_name: dsa-visualizer-dev
+    environment:
+      - NODE_ENV=development
+    networks:
+      - dsa-network
+    restart: unless-stopped
+
+  # Production service
+  prod:
     build:
       context: .
       dockerfile: Dockerfile
     ports:
       - "3000:80"
-    container_name: dsa-visualizer
+    container_name: dsa-visualizer-prod
+    environment:
+      - NODE_ENV=production
+    networks:
+      - dsa-network
+    restart: unless-stopped
+    depends_on:
+      - dev
+
+networks:
+  dsa-network:
+    driver: bridge

@@ -5,3 +5,16 @@ Dockerfile*
 docker-compose.yml
 .git
 .gitignore
+.github
+.vscode
+.env.local
+.DS_Store
+*.md
+LICENSE
+npm-debug.log
+.eslintignore
+.prettierignore
+.editorconfig
+coverage
+test
+.nyc_output
