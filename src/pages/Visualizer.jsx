@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Play,
-  ChevronRight,
   Zap,
   Grid,
   Box,
@@ -10,6 +9,7 @@ import {
   Link2,
   TreeDeciduous,
   Share2,
+  ArrowLeft,
 } from "lucide-react";
 
 const Visualizer = () => {
@@ -70,8 +70,15 @@ const Visualizer = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white overflow-hidden">
       {/* Navbar */}
-      <nav className="bg-gray-900/80 backdrop-blur-md shadow-lg flex items-center justify-between px-8 py-4">
+      <nav className="bg-gray-900/80 backdrop-blur-md shadow-lg flex items-center justify-between px-8 py-4 sticky top-0 z-40">
         <div className="flex items-center space-x-3">
+          <button
+            onClick={() => navigate("/")}
+            className="p-2 hover:bg-gray-800 rounded-lg transition-colors duration-200 mr-2"
+            title="Back to home"
+          >
+            <ArrowLeft size={20} className="text-indigo-400" />
+          </button>
           <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-indigo-600 to-purple-600 flex items-center justify-center shadow-md">
             <Zap size={20} className="text-white" />
           </div>
@@ -82,15 +89,15 @@ const Visualizer = () => {
       </nav>
 
      {/* Header Section */}
-<section className="max-w-6xl mx-auto px-6 pt-0 pb-2">
+<section className="max-w-6xl mx-auto px-6 pt-12 pb-8">
   <div className="text-center">
-    <h1 className="text-3xl md:text-4xl font-extrabold leading-tight">
+    <h1 className="text-4xl md:text-5xl font-extrabold leading-tight mb-3">
       <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-pink-500">
         Data Structures
       </span>{" "}
       & Algorithms
     </h1>
-    <p className="text-gray-400 text-base md:text-lg max-w-2xl mx-auto mt-1">
+    <p className="text-gray-400 text-lg max-w-2xl mx-auto">
       Learn and explore with interactive visualizations that bring core
       concepts to life.
     </p>
@@ -99,33 +106,34 @@ const Visualizer = () => {
 
 
       {/* Data Structures Grid */}
-      <section className="max-w-6xl mx-auto px-6 pb-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {dataStructures.map((ds) => (
+      <section className="max-w-7xl mx-auto px-6 pb-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {dataStructures.map((ds, index) => (
             <div
               key={ds.id}
-              className={`group bg-gray-800/60 backdrop-blur-md rounded-2xl p-6 border border-gray-700 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl ${
+              className={`group bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur-md rounded-2xl p-8 border border-gray-700 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-indigo-500/20 ${
                 hoveredCard === ds.id
-                  ? "border-indigo-500"
+                  ? "border-indigo-500 shadow-lg shadow-indigo-500/20"
                   : "hover:border-indigo-500"
               }`}
               onMouseEnter={() => setHoveredCard(ds.id)}
               onMouseLeave={() => setHoveredCard(null)}
+              style={{ animationDelay: `${index * 0.1}s` }}
             >
               {/* Header */}
-              <div className="flex items-center justify-between mb-5">
+              <div className="flex items-center justify-between mb-6">
                 <div
-                  className={`bg-gradient-to-br ${ds.color} w-14 h-14 rounded-xl flex items-center justify-center text-white`}
+                  className={`bg-gradient-to-br ${ds.color} w-16 h-16 rounded-xl flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform duration-300`}
                 >
                   {ds.icon}
                 </div>
                 <span
-                  className={`text-xs font-medium px-2 py-1 rounded-full ${
+                  className={`text-xs font-medium px-3 py-1 rounded-full backdrop-blur-md ${
                     ds.difficulty === "Beginner"
-                      ? "bg-green-500/20 text-green-400"
+                      ? "bg-green-500/20 text-green-400 border border-green-500/30"
                       : ds.difficulty === "Intermediate"
-                      ? "bg-amber-500/20 text-amber-400"
-                      : "bg-red-500/20 text-red-400"
+                      ? "bg-amber-500/20 text-amber-400 border border-amber-500/30"
+                      : "bg-red-500/20 text-red-400 border border-red-500/30"
                   }`}
                 >
                   {ds.difficulty}
@@ -133,33 +141,22 @@ const Visualizer = () => {
               </div>
 
               {/* Name */}
-              <h3 className="text-xl font-semibold mb-3 group-hover:text-indigo-400 transition-colors">
+              <h3 className="text-2xl font-semibold mb-3 group-hover:text-indigo-400 transition-colors duration-200">
                 {ds.name}
               </h3>
 
               {/* Description */}
-              <p className="text-gray-400 mb-6">{ds.description}</p>
+              <p className="text-gray-400 mb-8 text-base leading-relaxed">{ds.description}</p>
 
               {/* Action buttons */}
-              <div className="flex items-center justify-between mt-4">
+              <div className="flex items-center justify-center mt-auto">
                 <button
-                  className="flex items-center text-indigo-400 hover:text-indigo-300 transition-colors text-sm font-medium"
+                  className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 px-6 py-3 rounded-lg shadow-md transition-all duration-300 hover:shadow-indigo-500/50 hover:scale-105 flex items-center justify-center font-semibold text-white text-base"
                   onClick={() => navigate(`/visualizer/${ds.id}`)}
                   aria-label={`Explore ${ds.name} visualizations`}
                 >
-                  Explore Visualizations
-                  <ChevronRight
-                    size={18}
-                    className="ml-1 group-hover:translate-x-1 transition-transform"
-                  />
-                </button>
-
-                <button
-                  className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 p-2 rounded-lg shadow-md transition-all duration-300 hover:shadow-indigo-500/30 hover:scale-105 flex items-center"
-                  onClick={() => navigate(`/visualizer/${ds.id}`)}
-                  title={`Quick demo of ${ds.name}`}
-                >
-                  <Play size={16} />
+                  <Play size={18} className="mr-2" />
+                  Explore
                 </button>
               </div>
             </div>
